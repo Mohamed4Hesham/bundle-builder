@@ -19,14 +19,14 @@ function Accordion({
     children,
 }: AccordionProps) {
     return (
-        <div className={`mb-3 cursor-pointer transition-colors duration-200 ${isOpen ? "bg-[#EDF4FF] border-transparent pt-4 rounded-[10px]" : "bg-white"
+        <div className={`mb-3 cursor-pointer transition-colors duration-200 ${isOpen ? "bg-[#EDF4FF] border-transparent py-4 px-5 rounded-[10px]" : "bg-white"
             }`}>
             <div className="text-[12px] text-[#484848] px-4 mb-1">
                 STEP {stepOrder} OF 4
             </div>
             <div
                 onClick={onToggle}
-                className={`flex w-full items-center justify-between py-5 px-4 border-[#1F1F1F] ${isOpen ? "border-t-[0.5px]" : "border-y-[0.5px]"
+                className={`flex w-full items-center justify-between py-5 border-[#1F1F1F] ${isOpen ? "border-t-[0.5px]" : "border-y-[0.5px]"
                     }`}
             >
                 <div>
@@ -49,7 +49,7 @@ function Accordion({
             </div>
 
             {isOpen && (
-                <div className=" p-5">
+                <div>
                     {children}
                 </div>
             )}

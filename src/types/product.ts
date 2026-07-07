@@ -11,7 +11,7 @@ export interface Product {
 
   image: string;
 
-  currentPrice: number;
+  activePrice: number;
 
   compareAtPrice?: number;
 

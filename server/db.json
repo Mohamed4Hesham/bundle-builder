@@ -4,24 +4,28 @@
             "id": "step-1",
             "order": 1,
             "title": "Choose your cameras",
+            "icon": "/livestream.svg",
             "categoryId": "camera"
         },
         {
             "id": "step-2",
             "order": 2,
             "title": "Choose your plan",
+            "icon": "/Vector.svg",
             "categoryId": "plan"
         },
         {
             "id": "step-3",
             "order": 3,
             "title": "Choose your sensors",
+            "icon": "/Group1417.svg",
             "categoryId": "sensor"
         },
         {
             "id": "step-4",
             "order": 4,
             "title": "Add extra protection",
+            "icon": "/Frame1419.svg",
             "categoryId": "accessory"
         }
     ],
@@ -160,9 +164,7 @@
             "activePrice": 9.99,
             "compareAtPrice": 12.99
         }
-
     ],
-
     "initialBundle": {
         "selections": [
             {
@@ -189,6 +191,4 @@
             }
         ]
     }
-
-    
 }

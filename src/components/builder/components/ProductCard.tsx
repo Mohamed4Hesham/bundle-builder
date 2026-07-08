@@ -1,103 +1,150 @@
+import { useState } from "react";
 import type { Product } from "../../../types/product";
 
 interface ProductCardProps {
   product: Product;
+  selected: boolean;
+  onSelect: () => void;
   quantity?: number;
   selectedVariantId?: string;
   onQuantityChange?: (quantity: number) => void;
   onVariantChange?: (variantId: string) => void;
+  onIncrease: () => void;
+  onDecrease: () => void;
 }
-
 function ProductCard({
   product,
-  quantity = 1,
-  selectedVariantId,
-  onQuantityChange,
-  onVariantChange,
+  selected,
+  onSelect,
+  onIncrease,
+  onDecrease,
 }: ProductCardProps) {
+
+  const [currentQuantity, setCurrentQuantity] = useState(0);
+  const [selectedVariant, setSelectedVariant] = useState(
+    product.variants?.[0]?.id ?? ""
+  );
+
   return (
-    <article className="rounded-[10px] border border-[#D9D9D9] p-4 bg-white">
-      <div className="flex gap-4">
-        {/* Product Image */}
-        <div className="shrink-0">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="w-28 h-28 object-contain"
-          />
-        </div>
-
-        {/* Product Details */}
-        <div className="flex flex-1 flex-col">
-          <h3 className="text-[18px] font-semibold text-[#0B0D10]">
-            {product.title}
-          </h3>
-
-          {product.description && (
-            <p className="mt-2 text-sm text-[#666]">
-              {product.description}
-            </p>
-          )}
-
-          {/* Badge */}
+    <article
+      onClick={onSelect}
+      className={`rounded-[10px] p-3 bg-white transition-all cursor-pointer ${selected && currentQuantity
+        ? "border-2 border-[#4E2FD2B2]"
+        : "border border-[#D9D9D9]"
+        }`}>
+      <div className="flex">
+        {/* Product Image */} {/* Badge */}
+        <div className="mr-5">
           {product.badge && (
-            <span className="mt-3 w-fit rounded-full bg-[#E7F7EA] px-3 py-1 text-xs font-medium text-[#1A7F37]">
+            <span className="text-[12px] text-white font-medium bg-[#4E2FD2] rounded-[10px] px-[6px] py-1">
               {product.badge}
             </span>
           )}
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-26 h-35 object-contain"
+          />
+        </div>
 
-          {/* Price */}
-          <div className="mt-4 flex items-center gap-2">
-            <span className="text-xl font-semibold">
-              ${product.activePrice}
-            </span>
-
-            {product.compareAtPrice && (
-              <span className="text-sm text-gray-400 line-through">
-                ${product.compareAtPrice}
-              </span>
-            )}
+        <div className="flex flex-col">
+          <div className="text-base font-semibold text-[#1F1F1F] mb-2">
+            {product.title}
           </div>
+
+          {product.description && (
+            <>
+              <div className="text-[12px] text-[#1F1F1FBF] font-medium">
+                {product.description}
+              </div>
+              <span className="text-[12px] underline text-[#0000EE] font-medium mb-2">{product.learnMoreUrl}</span>
+            </>
+          )}
 
           {/* Variants */}
-          {/* {product.variants?.length > 0 && (
-            <select
-              value={selectedVariantId}
-              onChange={(e) => onVariantChange?.(e.target.value)}
-              className="mt-4 rounded-md border border-gray-300 px-3 py-2"
-            >
-              {product.variants.map((variant) => (
-                <option key={variant.id} value={variant.id}>
+          {product?.variants?.length > 0 && (
+            <div className="mb-[10px] flex gap-2">
+              {product?.variants?.map((variant) => (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedVariant(variant.id);
+                  }}
+                  key={variant.id}
+                  type="button"
+                  className={`flex items-center rounded-[2px] border-[0.5px] px-[5px] py-[1px] text-[10px] font-medium transition-colors cursor-pointer ${selectedVariant === variant.id
+                    ? "border-[#0AA288] bg-[#1DF0BB0A] text-[#1F1F1F]"
+                    : "border-[#CCCCCC] text-[#1F1F1F] hover:border-[#0AA288] hover:bg-[#1DF0BB0A]"
+                    }`}
+                >
+                  <img
+                    src={variant.image}
+                    className="w-7 h-7"
+                  />
                   {variant.name}
-                </option>
+                </button>
               ))}
-            </select>
-          )} */}
 
-          {/* Quantity */}
-          <div className="mt-4 flex items-center gap-3">
-            <button
-              onClick={() =>
-                onQuantityChange?.(Math.max(1, quantity - 1))
-              }
-              className="h-8 w-8 rounded border"
-            >
-              -
-            </button>
+            </div>
+          )}
+          <div className="flex justify-between">
+            <div className="flex items-center justify-center">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentQuantity((q) => Math.max(0, q - 1));
+                  onDecrease()
 
-            <span>{quantity}</span>
+                }}
+                className="flex items-center justify-center rounded cursor-pointer"
+              >
+                <img
+                  src="/Minus.svg"
+                  alt="Decrease quantity"
+                  className="h-5 w-5"
+                />
+              </button>
 
-            <button
-              onClick={() =>
-                onQuantityChange?.(quantity + 1)
-              }
-              className="h-8 w-8 rounded border"
-            >
-              +
-            </button>
+              <span className="mx-[10px]">{currentQuantity}</span>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentQuantity((q) => q + 1);
+                  onIncrease()
+
+                }}
+                className="flex items-center justify-center rounded cursor-pointer"
+              >
+                <img
+                  src="/Plus.svg"
+                  alt="Increase quantity"
+                  className="h-5 w-5"
+                />
+              </button>
+            </div>
+
+
+            {/* Price */}
+            <div className=" flex flex-col">
+              {product.compareAtPrice && (
+                <span className="text-base text-[#D8392B] line-through font-normal">
+                  ${product.compareAtPrice}
+                </span>
+              )}
+              <span className="text-base font-normal text-[#575757]">
+                ${product.activePrice}
+              </span>
+
+
+            </div>
           </div>
+
         </div>
+
+
       </div>
+
     </article>
   );
 }

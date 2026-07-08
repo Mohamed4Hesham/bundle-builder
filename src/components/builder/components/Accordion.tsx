@@ -8,6 +8,7 @@ interface AccordionProps {
     subtitle?: string;
     stepOrder: number;
     children: ReactNode;
+    selectedCount: number;
 }
 
 function Accordion({
@@ -17,6 +18,7 @@ function Accordion({
     icon,
     stepOrder,
     children,
+    selectedCount
 }: AccordionProps) {
     return (
         <div className={`mb-3 cursor-pointer transition-colors duration-200 ${isOpen ? "bg-[#EDF4FF] border-transparent py-4 px-5 rounded-[10px]" : "bg-white"
@@ -39,13 +41,21 @@ function Accordion({
                     </div>
 
                 </div>
+                <div className="flex items-center">
+                    {selectedCount > 0 && isOpen && (
+                        <span className="text-[#4E2FD2] px-2 py-1 text-[14px] mr-1">
+                            {selectedCount} selected
+                        </span>
+                    )}
+                    <span
+                        className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+                            }`}
+                    >
+                        <img src={arrow} alt="Arrow" className="w-3 h-3" />
+                    </span>
+                </div>
 
-                <span
-                    className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
-                        }`}
-                >
-                    <img src={arrow} alt="Arrow" className="w-3 h-3" />
-                </span>
+
             </div>
 
             {isOpen && (

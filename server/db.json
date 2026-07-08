@@ -62,17 +62,17 @@
                 {
                     "id": "white",
                     "name": "White",
-                    "image": "/images/outdoor-camera-white.png"
+                    "image": "/imgs/camera/wyze-cam-1/wyz-cam-1-variants/wyze-cam-1-white.png"
                 },
                 {
                     "id": "grey",
                     "name": "grey",
-                    "image": "/images/outdoor-camera-grey.png"
+                    "image": "/imgs/camera/wyze-cam-1/wyz-cam-1-variants/wyze-cam-1-grey.png"
                 },
                 {
                     "id": "black",
                     "name": "Black",
-                    "image": "/images/outdoor-camera-black.png"
+                    "image": "/imgs/camera/wyze-cam-1/wyz-cam-1-variants/wyze-cam-1-black.png"
                 }
             ]
         },
@@ -90,12 +90,12 @@
                 {
                     "id": "white",
                     "name": "White",
-                    "image": "/images/outdoor-camera-white.png"
+                    "image": "/imgs/camera/wyze-cam-2/wyz-cam-2-variants/wyze-cam-2-white.png"
                 },
                 {
                     "id": "black",
                     "name": "Black",
-                    "image": "/images/outdoor-camera-black.png"
+                    "image": "/imgs/camera/wyze-cam-2/wyz-cam-2-variants/wyze-cam-2-black.png"
                 }
             ]
         },
@@ -113,12 +113,12 @@
                 {
                     "id": "white",
                     "name": "White",
-                    "image": "/images/outdoor-camera-white.png"
+                    "image": "/imgs/camera/wyze-cam-3/wyz-cam-3-variants/wyze-cam-3-white.png"
                 },
                 {
                     "id": "black",
                     "name": "Black",
-                    "image": "/images/outdoor-camera-black.png"
+                    "image": "/imgs/camera/wyze-cam-3/wyz-cam-3-variants/wyze-cam-3-black.png"
                 }
             ]
         },
@@ -143,18 +143,18 @@
 
             "activePrice": 27.98,
             "compareAtPrice": null,
-            "badge": " ",
+            "badge": null,
             "learnMoreUrl": "Learn More",
             "variants": [
                 {
                     "id": "white",
                     "name": "White",
-                    "image": "/images/outdoor-camera-white.png"
+                    "image": "/imgs/camera/wyze-cam-5/wyz-cam-5-variants/wyze-cam-5-white.png"
                 },
                 {
                     "id": "black",
                     "name": "Black",
-                    "image": "/images/outdoor-camera-black.png"
+                    "image": "/imgs/camera/wyze-cam-5/wyz-cam-5-variants/wyze-cam-5-black.png"
                 }
             ]
         },

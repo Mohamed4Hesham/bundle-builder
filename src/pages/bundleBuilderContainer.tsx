@@ -10,7 +10,6 @@ import type { Shipping } from "../types/shipping";
 function BundleBuilderContainer() {
   const [steps, setSteps] = useState<StepType[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-
   const [selectedProducts, setSelectedProducts] = useState<SelectedProducts[]>([]);
   const [shipping, setShipping] = useState<Shipping | null>(null);
 
@@ -85,19 +84,21 @@ function BundleBuilderContainer() {
     const loadInitialBundle = async () => {
       try {
 
-            const savedBundle = localStorage.getItem("bundle-builder");
+        const savedBundle = localStorage.getItem("bundle-builder");
 
-    if (savedBundle) {
-      setSelectedProducts(JSON.parse(savedBundle));
-      return;
-    }
+        if (savedBundle) {
+          const { selectedProducts, shipping } = JSON.parse(savedBundle);
+
+          setSelectedProducts(selectedProducts);
+          setShipping(shipping);
+
+          return; // Don't load the initial bundle if a saved bundle exists
+        }
+
         const { selections, shipping } = await bundleApi.getInitialBundle();
-        console.log(shipping, "shipping")
-
-        console.log("Fetched initial bundle:", selections);
 
         setSelectedProducts(selections);
-        setShipping(shipping)
+        setShipping(shipping);
       } catch (error) {
         console.error(error);
       }
@@ -110,7 +111,7 @@ function BundleBuilderContainer() {
 
   return (
     <main className="mx-auto max-w-screen-2xl px-6 md:px-10 xl:px-24 py-12">
-      <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
+      <div className="grid items-start gap-8 lg:grid-cols-[2fr_1fr]">
         <Builder
           steps={steps}
           products={products}

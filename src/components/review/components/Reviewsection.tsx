@@ -14,7 +14,7 @@ interface ReviewSectionProps {
 function ReviewSection({
   title,
   products,
-updateQuantity
+  updateQuantity
 }: ReviewSectionProps) {
   if (products.length === 0) {
     return null;
@@ -22,28 +22,25 @@ updateQuantity
 
   return (
     <section>
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-[14px] font-semibold uppercase tracking-wide text-[#1F1F1F]">
+      <div className="border-b border-[#CED6DE] mb-4">
+        <div className="text-[12px] font-normal tracking-[3%] leading-[16px] text-[#A8B2BD] mb-2">
           {title}
-        </h3>
+        </div>
 
-        <span className="text-[12px] text-[#808080]">
-          {products.length} Selected
-        </span>
+        <div className="space-y-4">
+          {products.map((product) => (
+            <ReviewItem
+              key={`${product.id}-${product.variantId ?? "default"}`}
+
+              product={product}
+              quantity={product.quantity}
+              updateQuantity={updateQuantity}
+
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {products.map((product) => (
-          <ReviewItem
-  key={`${product.id}-${product.variantId ?? "default"}`}
-
-            product={product}
-            quantity={product.quantity}
-          updateQuantity={updateQuantity}
-
-          />
-        ))}
-      </div>
     </section>
   );
 }

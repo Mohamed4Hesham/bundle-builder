@@ -22,110 +22,134 @@ function ReviewItem({
     const imageSrc = selectedVariant
         ? selectedVariant.image
         : product.image;
+
+    const isPlan = product.categoryId === "plan"; if (isPlan) {
+        return (
+            <article className="flex items-center justify-between pb-3">
+
+                <div className="flex items-center ">
+                    <img
+                        src={imageSrc}
+                        alt={product.title}
+                        className="h-10 w-10"
+                    />
+
+                    {product.title === "Cam Unlimited" ? (
+                        <span className="text-base font-semibold leading-[100%] tracking-[-0.2%]">
+                            <span className="text-[#0B0D10]">Cam </span>
+                            <span className="text-[#4E2FD2]">Unlimited</span>
+                        </span>
+                    ) : (
+                        <span className="text-base font-normal text-[#0B0D10]">
+                            {product.title}
+                        </span>
+                    )}
+                </div>
+
+                <div className="flex flex-col items-end">
+                    {product.compareAtPrice && (
+                        <span className="text-[14px] text-[#6F7882] line-through">
+                            {(product.compareAtPrice * quantity).toFixed(2)}/mo
+                        </span>
+                    )}
+
+                    <span className="text-[14px] font-semibold text-[#4E2FD2]">
+                        {lineTotal.toFixed(2)}/mo
+                    </span>
+                </div>
+
+            </article>
+        );
+    }
     return (
-        <article className="flex gap-4 border-b border-[#E7E7E7] pb-4">
+        <article className="flex items-center justify-between pb-3">
 
             {/* Product Image */}
+            <div className="flex items-center gap-3">
+                <div
+                    className="rounded-[5px] p-2 bg-white"
+                >
+                    <img
+                        src={imageSrc}
+                        alt={product.title}
+                        className="h-10 w-10"
+                    />
+                </div>
 
-            <div className="h-20 w-20 shrink-0 rounded-md border border-[#E5E5E5] bg-white p-2">
-                <img
-                    src={imageSrc}
-                    alt={product.title}
-                    className="h-full w-full object-contain"
-                />
+                {/* product title */}
+
+                <div className="text-[14px] font-normal text-[#0B0D10] leading-[16px] tracking-[0.5%]">
+                    {product.title}
+
+                </div>
             </div>
 
-            {/* Content */}
 
-            <div className="flex flex-1 flex-col">
-
-                <div className="flex items-start justify-between">
-
-                    <div>
-
-                        <h4 className="text-[16px] font-semibold text-[#1F1F1F]">
-                            {product.title}
-                        </h4>
-
-                        {product.variantId && (
-                            <p className="mt-1 text-[12px] text-[#808080]">
-                                {product.variantId}
-                            </p>
-                        )}
-
-                    </div>
-
+            {/* Quantity */}
+            <div className="flex items-center gap-4">
+                <div className="flex">
                     <button
-                        type="button"
-                        className="text-[18px] text-[#B0B0B0] transition-colors hover:text-red-500"
+                        onClick={(e) => {
+                            e.stopPropagation();
+
+                            updateQuantity(
+                                product.id,
+                                selectedVariant?.id ?? "",
+                                -1
+                            );
+                        }}
+                        className="flex items-center justify-center rounded cursor-pointer"
                     >
-                        ×
+                        <img
+                            src="/Minus.svg"
+                            alt="Decrease quantity"
+                            className="h-5 w-5"
+                        />
                     </button>
 
-                </div>
+                    <span className="mx-[10px]">{quantity}</span>
 
-                <div className="mt-4 flex items-center justify-between">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
 
-                    {/* Quantity */}
-
-                    <div className="flex items-center">
-
-                        <button
-                            onClick={() => updateQuantity(
+                            updateQuantity(
                                 product.id,
-                                product.variantId ?? "",
-                                -1
-                            )}
-                            className="cursor-pointer"
-                        >
-                            <img
-                                src="/Minus.svg"
-                                alt="Decrease quantity"
-                                className="h-5 w-5"
-                            />
-                        </button>
-
-                        <span className="mx-3 w-4 text-center">
-                            {quantity}
-                        </span>
-
-                        <button
-                            onClick={() => updateQuantity(product.id, product.variantId ?? "", 1)}
-
-                            className="cursor-pointer"
-                        >
-                            <img
-                                src="/Plus.svg"
-                                alt="Increase quantity"
-                                className="h-5 w-5"
-                            />
-                        </button>
-
-                    </div>
-
-                    {/* Line Total */}
-
-                    <div className="text-right">
-
-                        {product.compareAtPrice && (
-                            <div className="text-[13px] text-[#D8392B] line-through">
-                                $
-                                {(
-                                    product.compareAtPrice *
-                                    quantity
-                                ).toFixed(2)}
-                            </div>
-                        )}
-
-                        <div className="text-[18px] font-semibold text-[#1F1F1F]">
-                            ${lineTotal.toFixed(2)}
-                        </div>
-
-                    </div>
-
+                                selectedVariant?.id ?? "",
+                                1
+                            );
+                        }}
+                        className="flex items-center justify-center rounded cursor-pointer"
+                    >
+                        <img
+                            src="/Plus.svg"
+                            alt="Increase quantity"
+                            className="h-5 w-5"
+                        />
+                    </button>
                 </div>
 
+
+                <div className="flex flex-col max-w-[41px]">
+                    {product.compareAtPrice && (
+                        <div className="text-[14px] text-[#6F7882] font-normal line-through tracking-[0.5%] leading-[16px]">
+                            $
+                            {(
+                                product.compareAtPrice *
+                                quantity
+                            ).toFixed(2)}
+                        </div>
+                    )}
+
+                    <span className="text-[14px] font-semibold text-[#4E2FD2]">
+                        {lineTotal === 0
+                            ? "FREE"
+                            : `$${lineTotal.toFixed(2)}`}
+                    </span>
+                </div>
             </div>
+
+
 
         </article>
     );

@@ -6,30 +6,30 @@ interface ShippingSectionProps {
 
 function ShippingSection({ shipping }: ShippingSectionProps) {
   return (
-    <article className="flex gap-4 border-b border-[#E7E7E7] pb-4">
+    <article className="flex gap-3 mb-[10px]">
       {/* Image */}
-      <div className="h-20 w-20 shrink-0 rounded-md border border-[#E5E5E5] bg-white p-2">
+      <div className="bg-white p-2">
         <img
           src={shipping?.image}
           alt={shipping?.title}
-          className="h-full w-full object-contain"
+          className="h-10 w-10"
         />
       </div>
 
       {/* Content */}
       <div className="flex flex-1 items-center justify-between">
-        <h4 className="text-[16px] font-semibold text-[#1F1F1F]">
+        <div className="text-[14px] font-normal text-[#0B0D10] tracking-[0.5%] leading-[16px]">
           {shipping?.title}
-        </h4>
+        </div>
 
         <div className="text-right">
-          <div className="text-[13px] text-[#D8392B] line-through">
+          <div className="text-[14px] line-through text-[#6F7882] tracking-[0.5%] leading-[16px]">
             ${shipping?.compareAtPrice.toFixed(2)}
           </div>
 
-          <div className="text-[18px] font-semibold text-[#1F1F1F]">
+          <div className="text-[14px] font-semibold text-[#4E2FD2] tracking-[0.5%] leading-[16px]">
             {shipping?.activePrice === 0
-              ? "Free"
+              ? "FREE"
               : `$${shipping?.activePrice.toFixed(2)}`}
           </div>
         </div>

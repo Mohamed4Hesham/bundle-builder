@@ -1,12 +1,15 @@
 import type { SelectedProducts } from "../../../types/selectedproducts";
 import toast from "react-hot-toast";
+import type { Shipping } from "../../../types/shipping";
+import satisfactioBadge from "../../../assets/images/Satisfaction Badge-05 1.png"
+
 interface ReviewSummaryProps {
     subtotal: number;
     savings: number;
     total: number;
     compareAtTotal: number;
     selectedProducts: SelectedProducts[];
-
+    shipping: Shipping | null;
 }
 
 function ReviewSummary({
@@ -14,95 +17,86 @@ function ReviewSummary({
     savings,
     compareAtTotal,
     total,
-    selectedProducts
+    selectedProducts,
+    shipping
 }: ReviewSummaryProps) {
 
     const handleSaveSystem = () => {
+        console.log(selectedProducts)
         localStorage.setItem(
             "bundle-builder",
-            JSON.stringify(selectedProducts)
+            JSON.stringify({
+                selectedProducts,
+                shipping,
+            })
         );
 
-toast.success("Your system has been saved.");
-
+        toast.success("Your system has been saved.");
     };
+
+    const handleCheckout = () => {
+        toast.success("Your order has been submitted successfully!");
+    };
+
     return (
-        <div className="mt-8 border-t border-[#E7E7E7] pt-6">
+        <div className="">
 
-            {/* Savings */}
+            {/* Top Summary */}
+            <div className="flex items-center justify-between mb-4">
+                <div>
+                    <img
+                        src={satisfactioBadge}
+                        alt="Satisfaction Guarantee"
+                        className="h-20 w-20"
+                    />
 
-            {savings > 0 && (
-                <div className="mb-3 flex items-center justify-between">
-                    <span className="text-[15px] text-[#6F6F6F]">
-                        Savings
-                    </span>
-
-                    <span className="text-[15px] font-medium text-[#4E2FD2]">
-                        -${savings.toFixed(2)}
-                    </span>
                 </div>
-            )}
+                <div className="flex flex-col items-end">
 
-            {/* Subtotal */}
+                    <div className="rounded-[3px] bg-[#4E2FD2] px-2 py-1 text-[12px] font-normal text-white text-[12px] tracking-[-5%] leading-[100%] mb-2">
+                        As low as $19.19/mo
+                    </div>
 
-            <div className="mb-3 flex items-center justify-between">
-                <span className="text-[15px] text-[#6F6F6F]">
-                    Subtotal
-                </span>
+                    <div className="flex items-center gap-2">
 
-                <span className="text-[16px] font-semibold text-[#1F1F1F]">
-                    ${subtotal.toFixed(2)}
-                </span>
-            </div>
+                        <span className="text-[18px] font-normal leading-[20px] tracking-[-0.25%] text-[#6F7882] line-through">
+                            ${compareAtTotal.toFixed(2)}
+                        </span>
 
-            {/* Shipping */}
+                        <span className="text-[24px] font-semibold leading-[32px] tracking-[-0.13%] text-[#4E2FD2]">
+                            ${total.toFixed(2)}
+                        </span>
 
-            <div className="mb-6 flex items-center justify-between">
-                <span className="text-[15px] text-[#6F6F6F]">
-                    Shipping
-                </span>
+                    </div>
 
-                <span className="text-[15px] font-medium text-[#1F1F1F]">
-                    Free
-                </span>
-            </div>
-
-            {/* Divider */}
-
-            <div className="mb-6 h-px bg-[#E7E7E7]" />
-
-            {/* Total */}
-
-            <div className="mb-8 flex items-center justify-between">
-
-                <span className="text-[20px] font-semibold text-[#1F1F1F]">
-                    Total
-                </span>
-
-                <span className="text-[24px] font-bold text-[#1F1F1F]">
-                    ${total.toFixed(2)}
-                </span>
+                </div>
 
             </div>
 
-            {/* Save For Later */}
+            {/* Buttons */}
+            <div className="flex flex-col gap-3">
+                {savings > 0 && (
+                    <div className="text-[12px] font-normal text-[#0AA288] tracking-[-0.06px] leading-[100%] text-center">
+                        Congrats! You’re saving ${savings.toFixed(2)} on your security bundle!
+                    </div>
+                )}
 
-            <button
-                onClick={handleSaveSystem}
-                type="button"
-                className="mb-4 w-full rounded-[8px] border border-[#4E2FD2] py-3 text-[16px] font-semibold text-[#4E2FD2] transition-colors hover:bg-[#4E2FD208]"
-            >
-                Save my system for later
-            </button>
 
-            {/* Checkout */}
+                <button
+                    onClick={handleCheckout}
+                    type="button"
+                    className="w-full rounded-[4px] bg-[#4E2FD2] px-4 py-3 text-[17px] font-bold text-white font-tt-norms leading-none"
+                >
+                    Checkout
+                </button>
+                <div
+                    onClick={handleSaveSystem}
+                    className="mb-[31px] text-center text-[14px] font-normal text-[#484848] tracking-[-0.02px] underline cursor-pointer font-gilroy italic leading-[120%]"
+                >
+                    Save my system for later
+                </div>
 
-            <button
-                type="button"
-                className="w-full rounded-[8px] bg-[#4E2FD2] py-3 text-[16px] font-semibold text-white transition-opacity hover:opacity-90"
-            >
-                Continue to Checkout
-            </button>
+            </div>
 
         </div>
     );

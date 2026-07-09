@@ -33,10 +33,7 @@ function ReviewPanel({
       };
     })
     .filter(Boolean);
-    
-//       useEffect(() => {
-// console.log(shipping)
-//       }, [shipping]);
+
 
   const cameras = selectedItems.filter(
     (product) => product?.categoryId === "camera"
@@ -61,38 +58,42 @@ function ReviewPanel({
     0
   );
 
-  const savings = selectedItems.reduce(
-    (total, product) => {
-      if (!product?.compareAtPrice) return total;
+  const savings =
+    selectedItems.reduce((total, product) => {
+      if (!product.compareAtPrice) return total;
 
       return (
         total +
         (product.compareAtPrice - product.activePrice) *
-        product?.quantity
+        product.quantity
       );
-    },
-    0
-  );
+    }, 0) +
+    ((shipping?.compareAtPrice ?? 0) - (shipping?.activePrice ?? 0));
 
   const total = subtotal;
-const compareAtTotal = selectedItems.reduce((total, product) => {
-  const price = product?.compareAtPrice ?? product?.activePrice;
+  const compareAtTotal =
+    selectedItems.reduce((total, product) => {
+      const price = product.compareAtPrice ?? product.activePrice;
 
-  return total + price * product?.quantity;
-}, 0);
+      return total + price * product.quantity;
+    }, 0) + (shipping?.compareAtPrice ?? 0);
+
   return (
-    <aside className="sticky top-6 h-fit rounded-[12px] border border-[#D9D9D9] bg-white p-6">
+    <aside className="bg-[#EDF4FF] rounded-[10px] pt-4 px-5 ">
 
-      <h2 className="text-[28px] font-semibold text-[#1F1F1F]">
-        Review
-      </h2>
+      <div className="text-[12px] font-normal text-[#484848] tracking-[1.6px] leading-[100%] mb-6">
+        REVIEW
+      </div>
 
-      <p className="mt-2 text-[14px] leading-6 text-[#6F6F6F]">
-        Lorem ipsum dolor sit amet consectetur. Nunc
-        dignissim semper orci enim.
-      </p>
+      <div className="font-semibold text-[22px] leading-[100%] text-[#1F1F1F] mb-2">
+        Your security system
+      </div>
+      <div className="text-[14px] font-normal leading-[130%] text-[#1F1F1F]/75 tracking-[0.6px]
+      pb-[10px] border-b border-[#CED6DE] mb-4">
+        Review your personalized protection system designed to keep what matters most safe.
+      </div>
 
-      <div className="mt-8 space-y-8">
+      <div className="">
 
         <ReviewSection
           title="CAMERAS"
@@ -110,30 +111,30 @@ const compareAtTotal = selectedItems.reduce((total, product) => {
         />
 
         <ReviewSection
-          title="Accessories"
+          title="ACCESSORIES"
           products={accessories}
           updateQuantity={updateQuantity}
 
         />
 
-                <ReviewSection
+        <ReviewSection
           title="PLAN"
           products={plans}
           updateQuantity={updateQuantity}
 
         />
 
-        <ShippingSection shipping={shipping}/>
-
+        <ShippingSection shipping={shipping} />
 
       </div>
 
       <ReviewSummary
         subtotal={subtotal}
         savings={savings}
-          compareAtTotal={compareAtTotal}
+        compareAtTotal={compareAtTotal}
         total={total}
         selectedProducts={selectedProducts}
+        shipping={shipping}
       />
 
     </aside>

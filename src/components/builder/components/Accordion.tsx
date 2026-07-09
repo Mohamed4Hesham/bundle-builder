@@ -35,15 +35,15 @@ function Accordion({
                     <div className="flex items-center gap-x-2">
                         <img src={icon} alt="Live Stream" className="w-6 h-6" />
 
-                        <div className="text-[22px] font-semibold text-[#0B0D10] leading-[100%]">
+                        <div className="text-[18px] sm:text-[20px] lg:text-[22px] font-semibold leading-[100%] text-[#0B0D10]">
                             {title}
                         </div>
                     </div>
 
                 </div>
-                <div className="flex items-center">
+                <div className="ml-3 flex shrink-0 items-center">
                     {selectedCount > 0 && isOpen && (
-                        <span className="text-[#4E2FD2] px-2 py-1 text-[14px] mr-1">
+                        <span className="whitespace-nowrap text-[#4E2FD2] px-2 py-1 text-[14px] mr-1">
                             {selectedCount} selected
                         </span>
                     )}
@@ -51,7 +51,7 @@ function Accordion({
                         className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
                             }`}
                     >
-                        <img src={arrow} alt="Arrow" className="w-3 h-3" />
+                        <img src={arrow} alt="Arrow" className="w-3 h-3 sm:w-4 sm:h-4" />
                     </span>
                 </div>
 

@@ -19,7 +19,6 @@ function ProductCard({
   updateQuantity
 }: ProductCardProps) {
 
-  // const [currentQuantity, setCurrentQuantity] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants?.[0]?.id ?? ""
   );
@@ -29,6 +28,11 @@ function ProductCard({
         selection.productId === product.id &&
         selection.variantId === selectedVariant
     )?.quantity ?? 0;
+
+  const minusIcon =
+    currentQuantity > 0
+      ? "/minus-enabled.svg"
+      : "/Minus.svg";
   return (
     <article
       className={`rounded-[10px] p-3 bg-white transition-all cursor-pointer ${selected
@@ -39,7 +43,7 @@ function ProductCard({
         {/* Product Image */} {/* Badge */}
         <div className="mr-5">
           {product.badge && (
-            <span className="text-[12px] text-white font-medium bg-[#4E2FD2] rounded-[10px] px-[6px] py-1">
+            <span className="text-[12px] whitespace-nowrap text-white font-medium bg-[#4E2FD2] rounded-[10px] px-[6px] py-1">
               {product.badge}
             </span>
           )}
@@ -66,7 +70,7 @@ function ProductCard({
 
           {/* Variants */}
           {product?.variants?.length > 0 && (
-            <div className="mb-[10px] flex gap-2">
+            <div className="mb-[10px] flex flex-wrap gap-2">
               {product?.variants?.map((variant) => (
                 <button
                   onClick={(e) => {
@@ -105,8 +109,8 @@ function ProductCard({
                 className="flex items-center justify-center rounded cursor-pointer"
               >
                 <img
-                  src="/Minus.svg"
-                  alt="Decrease quantity"
+                  src={minusIcon}
+                  alt={product.title}
                   className="h-5 w-5"
                 />
               </button>

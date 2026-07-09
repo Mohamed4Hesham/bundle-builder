@@ -22,7 +22,6 @@ function ReviewSummary({
 }: ReviewSummaryProps) {
 
     const handleSaveSystem = () => {
-        console.log(selectedProducts)
         localStorage.setItem(
             "bundle-builder",
             JSON.stringify({

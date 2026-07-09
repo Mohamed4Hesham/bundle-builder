@@ -23,6 +23,11 @@ function ReviewItem({
         ? selectedVariant.image
         : product.image;
 
+    const minusIcon =
+        quantity > 0
+            ? "/minus-enabled.svg"
+            : "/Minus.svg";
+
     const isPlan = product.categoryId === "plan"; if (isPlan) {
         return (
             <article className="flex items-center justify-between pb-3">
@@ -98,10 +103,10 @@ function ReviewItem({
                                 -1
                             );
                         }}
-                        className="flex items-center justify-center rounded cursor-pointer"
+                        className="flex items-center justify-center rounded cursor-pointer min-w-[30px]"
                     >
                         <img
-                            src="/Minus.svg"
+                            src={minusIcon}
                             alt="Decrease quantity"
                             className="h-5 w-5"
                         />
@@ -119,7 +124,7 @@ function ReviewItem({
                                 1
                             );
                         }}
-                        className="flex items-center justify-center rounded cursor-pointer"
+                        className="flex items-center justify-center rounded cursor-pointer min-w-[30px]"
                     >
                         <img
                             src="/Plus.svg"

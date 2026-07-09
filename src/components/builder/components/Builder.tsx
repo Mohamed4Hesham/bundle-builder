@@ -31,12 +31,6 @@ export function Builder({ steps, products, selectedProducts, updateQuantity }: B
   };
 
 
-  useEffect(() => {
-    console.log("Selected Products:", selectedProducts.length);
-  }, [selectedProducts]);
-
-
-
   return (
     <section>
       {steps.map((step) => {
@@ -54,7 +48,6 @@ export function Builder({ steps, products, selectedProducts, updateQuantity }: B
             onNext={() => handleNextStep(step.id)}
             nextStepTitle={nextStep?.title}
             selectedProducts={selectedProducts}
-            // onToggleProduct={toggleProduct}
             updateQuantity={updateQuantity}
           />
         );

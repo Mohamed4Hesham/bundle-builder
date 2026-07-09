@@ -66,7 +66,6 @@ function BundleBuilderContainer() {
     const loadSteps = async () => {
       try {
         const data = await bundleApi.getSteps();
-        console.log("Fetched steps:", data);
         setSteps(data);
       } catch (error) {
         console.error(error);
@@ -75,7 +74,6 @@ function BundleBuilderContainer() {
     const loadProducts = async () => {
       try {
         const data = await bundleApi.getProducts();
-        console.log("Fetched products:", data);
         setProducts(data);
       } catch (error) {
         console.error(error);

@@ -139,15 +139,17 @@ function ProductCard({
 
 
             {/* Price */}
-            <div className=" flex flex-col">
+            <div className="flex flex-col">
               {product.compareAtPrice && (
                 <span className="text-base text-[#D8392B] line-through font-normal">
                   ${product.compareAtPrice}
                 </span>
               )}
               <span className="text-base font-normal text-[#575757]">
-                ${product.activePrice}
-              </span>
+                {product.activePrice === 0
+                  ? "FREE"
+                  : `$${product.activePrice}`}
+                </span>
 
 
             </div>

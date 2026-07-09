@@ -1,34 +1,37 @@
 import { useState } from "react";
 import type { Product } from "../../../types/product";
+import type { SelectedProducts } from "../../../types/selectedproducts";
 
 interface ProductCardProps {
   product: Product;
   selected: boolean;
-  onSelect: () => void;
-  quantity?: number;
-  selectedVariantId?: string;
-  onQuantityChange?: (quantity: number) => void;
-  onVariantChange?: (variantId: string) => void;
-  onIncrease: () => void;
-  onDecrease: () => void;
+  selectedProducts: SelectedProducts[];
+  updateQuantity: (
+    productId: string,
+    variantId: string,
+    delta: number
+  ) => void;
 }
 function ProductCard({
   product,
   selected,
-  onSelect,
-  onIncrease,
-  onDecrease,
+  selectedProducts,
+  updateQuantity
 }: ProductCardProps) {
 
-  const [currentQuantity, setCurrentQuantity] = useState(0);
+  // const [currentQuantity, setCurrentQuantity] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants?.[0]?.id ?? ""
   );
-
+  const currentQuantity =
+    selectedProducts.find(
+      (selection) =>
+        selection.productId === product.id &&
+        selection.variantId === selectedVariant
+    )?.quantity ?? 0;
   return (
     <article
-      onClick={onSelect}
-      className={`rounded-[10px] p-3 bg-white transition-all cursor-pointer ${selected && currentQuantity
+      className={`rounded-[10px] p-3 bg-white transition-all cursor-pointer ${selected
         ? "border-2 border-[#4E2FD2B2]"
         : "border border-[#D9D9D9]"
         }`}>
@@ -92,9 +95,12 @@ function ProductCard({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setCurrentQuantity((q) => Math.max(0, q - 1));
-                  onDecrease()
 
+                  updateQuantity(
+                    product.id,
+                    selectedVariant,
+                    -1
+                  );
                 }}
                 className="flex items-center justify-center rounded cursor-pointer"
               >
@@ -110,9 +116,12 @@ function ProductCard({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setCurrentQuantity((q) => q + 1);
-                  onIncrease()
 
+                  updateQuantity(
+                    product.id,
+                    selectedVariant,
+                    1
+                  );
                 }}
                 className="flex items-center justify-center rounded cursor-pointer"
               >

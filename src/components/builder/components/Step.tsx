@@ -11,11 +11,9 @@ interface StepProps {
     products: Product[];
     onToggle: () => void;
     onNext: () => void;
-      nextStepTitle?: string;
+    nextStepTitle?: string;
     selectedProducts: SelectedProducts[];
-    onToggleProduct: (productId: string) => void;
-    onIncreaseQuantity: (productId: string) => void;
-    onDecreaseQuantity: (productId: string) => void;
+    updateQuantity: (productId: string, selectedVariant: string, deltaNumber: number) => void;
 }
 function Step({
     step,
@@ -23,9 +21,7 @@ function Step({
     onToggle,
     products,
     selectedProducts,
-    onToggleProduct,
-    onIncreaseQuantity,
-    onDecreaseQuantity,
+    updateQuantity,
     onNext,
     nextStepTitle
 }: StepProps) {
@@ -34,9 +30,17 @@ function Step({
     const stepProducts = products.filter(
         (product) => product.categoryId === step.categoryId
     );
-    const selectedCount = selectedProducts.filter((selected) =>
-        stepProducts.some((product) => product.id === selected.productId)
-    ).length;
+    const selectedCount = new Set(
+        selectedProducts
+            .filter((selected) =>
+                stepProducts.some(
+                    (product) => product.id === selected.productId
+                )
+            )
+            .map((selected) => selected.productId)
+    ).size;
+
+
     return (
         <>
             <Accordion
@@ -49,35 +53,33 @@ function Step({
 
             >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-                    {stepProducts.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            onSelect={() => onToggleProduct(product.id)}
-                            onIncrease={() => onIncreaseQuantity(product.id)}
-                            onDecrease={() => onDecreaseQuantity(product.id)}
-                            selected={selectedProducts.some(
-                                (selected) => selected.productId === product.id
-                            )}
-                            quantity={
-                                selectedProducts.find(
-                                    (p) => p.productId === product.id
-                                )?.quantity ?? 0
-                            }
-                        />
-                    ))}
+                    {stepProducts.map((product) => {
+                        const isSelected = selectedProducts.some(
+                            (selected) => selected.productId === product.id
+                        );
+
+                        return (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                selected={isSelected}
+                                selectedProducts={selectedProducts}
+                                updateQuantity={updateQuantity}
+                            />
+                        );
+                    })}
                 </div>
-{isOpen && nextStepTitle && (
-  <div className="mt-6 flex justify-center">
-    <button
-      type="button"
-      onClick={onNext}
-      className="rounded-[7px] border border-[#4E2FD2] px-6 py-2 text-[18px] font-semibold text-[#4E2FD2]"
-    >
-      Next: {nextStepTitle}
-    </button>
-  </div>
-)}
+                {isOpen && nextStepTitle && (
+                    <div className="mt-6 flex justify-center">
+                        <button
+                            type="button"
+                            onClick={onNext}
+                            className="rounded-[7px] border border-[#4E2FD2] px-6 py-2 text-[18px] font-semibold text-[#4E2FD2]"
+                        >
+                            Next: {nextStepTitle}
+                        </button>
+                    </div>
+                )}
             </Accordion>
 
         </>

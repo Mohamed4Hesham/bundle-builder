@@ -128,7 +128,6 @@
             "title": "Wyze Duo Cam Doorbell",
             "description": "Two cameras. Two views. Double the porch protection.",
             "image": "/imgs/camera/wyze-cam-4/wyze-cam-4.png",
-
             "activePrice": 27.98,
             "compareAtPrice": null,
             "badge": null,
@@ -140,7 +139,6 @@
             "title": "Wyze Battery Cam Pro",
             "description": "Protect anywhere. See everything in 2.5K HDR. No power outlet or electrician needed.",
             "image": "/imgs/camera/wyze-cam-5/wyze-cam-5.png",
-
             "activePrice": 27.98,
             "compareAtPrice": null,
             "badge": null,
@@ -161,14 +159,14 @@
         {
             "id": "sensor-1",
             "title": "Wyze Sense Motion Sensor",
-            "image": "/images/outdoor-camera.png",
+            "image": "/imgs/sensors/sensor-1.png",
             "activePrice": 58.98,
             "categoryId": "sensor"
         },
         {
             "id": "sensor-2",
             "title": "Wyze Sense Hub (Required)",
-            "image": "/images/outdoor-camera.png",
+            "image": "/imgs/sensors/sensor-2.png",
             "activePrice": 0,
             "compareAtPrice": 29.92,
             "categoryId": "sensor"
@@ -176,7 +174,7 @@
         {
             "id": "accessory-1",
             "title": "Wyze MicroSD Card (256GB)",
-            "image": "/images/outdoor-camera.png",
+            "image": "/imgs/accessories/accessory-1.png",
             "activePrice": 27.98,
             "compareAtPrice": null,
             "categoryId": "accessory"
@@ -185,7 +183,7 @@
             "id": "plan-1",
             "categoryId": "plan",
             "title": "Cam Unlimited",
-            "image": "/images/outdoor-camera.png",
+            "image": "/Layer_1.svg",
             "activePrice": 9.99,
             "compareAtPrice": 12.99
         }
@@ -194,26 +192,30 @@
         "selections": [
             {
                 "productId": "sensor-1",
+                "variantId": "",
                 "quantity": 2
             },
             {
                 "productId": "sensor-2",
+                "variantId": "",
                 "quantity": 1
             },
             {
                 "productId": "plan-1",
+                "variantId": "",
                 "quantity": 1
             },
             {
                 "productId": "accessory-1",
+                "variantId": "",
                 "quantity": 1
             }
         ],
-        "shipping": [
-            {
-                "compareAtPrice": 5.99,
-                "activePrice": 0
-            }
-        ]
+        "shipping": {
+            "title": "Free shipping",
+            "image": "/Wyze Sense Keypad.svg",
+            "compareAtPrice": 5.99,
+            "activePrice": 0
+        }
     }
 }

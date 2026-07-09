@@ -7,97 +7,13 @@ import type { SelectedProducts } from "../../../types/selectedproducts";
 interface BuilderProps {
   steps: StepType[];
   products: Product[];
+  selectedProducts: SelectedProducts[];
+  updateQuantity: (productId: string, selectedVariant: string, deltaNumber: number) => void;
 }
 
-export function Builder({ steps, products }: BuilderProps & { products: Product[] }) {
+export function Builder({ steps, products, selectedProducts, updateQuantity }: BuilderProps & { products: Product[] }) {
   const [openStepId, setOpenStepId] = useState("step-1");
-  const [selectedProducts, setSelectedProducts] = useState<SelectedProducts[]>([]);
 
-  const toggleProduct = (productId: string) => {
-    setSelectedProducts((previous) => {
-      const existing = previous.find(
-        (product) => product.productId === productId
-      );
-
-      if (existing) {
-        if (existing.quantity === 1) {
-          return previous.filter(
-            (product) => product.productId !== productId
-          );
-        }
-
-        return previous.map((product) =>
-          product.productId === productId
-            ? {
-              ...product,
-              quantity: product.quantity - 1,
-            }
-            : product
-        );
-      }
-
-      return [
-        ...previous,
-        {
-          productId,
-          quantity: 1,
-        },
-      ];
-    });
-  };
-
-
-  const increaseQuantity = (productId: string) => {
-    setSelectedProducts((previous) => {
-      const existing = previous.find(
-        (product) => product.productId === productId
-      );
-
-      if (!existing) {
-        return [
-          ...previous,
-          {
-            productId,
-            quantity: 1,
-          },
-        ];
-      }
-
-      return previous.map((product) =>
-        product.productId === productId
-          ? {
-            ...product,
-            quantity: product.quantity + 1,
-          }
-          : product
-      );
-    });
-  };
-
-  const decreaseQuantity = (productId: string) => {
-    setSelectedProducts((previous) => {
-      const existing = previous.find(
-        (product) => product.productId === productId
-      );
-
-      if (!existing) return previous;
-
-      if (existing.quantity === 1) {
-        return previous.filter(
-          (product) => product.productId !== productId
-        );
-      }
-
-      return previous.map((product) =>
-        product.productId === productId
-          ? {
-            ...product,
-            quantity: product.quantity - 1,
-          }
-          : product
-      );
-    });
-  };
   const getNextStep = (currentStepId: string) => {
     const currentIndex = steps.findIndex(
       (step) => step.id === currentStepId
@@ -138,9 +54,8 @@ export function Builder({ steps, products }: BuilderProps & { products: Product[
             onNext={() => handleNextStep(step.id)}
             nextStepTitle={nextStep?.title}
             selectedProducts={selectedProducts}
-            onToggleProduct={toggleProduct}
-            onIncreaseQuantity={increaseQuantity}
-            onDecreaseQuantity={decreaseQuantity}
+            // onToggleProduct={toggleProduct}
+            updateQuantity={updateQuantity}
           />
         );
       })}

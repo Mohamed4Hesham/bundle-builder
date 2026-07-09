@@ -45,3 +45,5 @@ The application will be available at:
 
 -  http://localhost:5173
 
+
+Note: When using npm run dev, the frontend may start before the JSON Server is ready. If the page initially loads without data, wait a moment and refresh the browser. 
